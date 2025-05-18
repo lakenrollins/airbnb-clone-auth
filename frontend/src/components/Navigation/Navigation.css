@@ -1,0 +1,12 @@
+.nav { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 60px; background: #fff; border-bottom: 1px solid #ddd; }
+.nav-logo { font-size: 1.5rem; font-weight: bold; color: #333; text-decoration: none; }
+.nav-links { display: flex; list-style: none; margin: 0; padding: 0; }
+.nav-links li { margin-left: 20px; }
+.nav-links a, .nav-links button { background: none; border: none; font-weight: 500; color: #333; cursor: pointer; text-decoration: none; padding: 0; }
+
+.profile-container { position: relative; }
+.profile-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #333; }
+.profile-dropdown { position: absolute; right: 0; top: 100%; background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 10px; list-style: none; }
+.profile-dropdown.hidden { display: none; }
+.profile-dropdown li { margin: 8px 0; }
+.profile-dropdown button { background: none; border: none; color: #007bff; cursor: pointer; padding: 0; }

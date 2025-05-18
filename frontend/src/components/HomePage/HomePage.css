@@ -1,0 +1,59 @@
+.home-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.spots-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.spot-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s;
+}
+.spot-card:hover {
+  transform: scale(1.02);
+}
+.spot-image {
+  width: 100%;
+  padding-top: 56.25%;
+  background-size: cover;
+  background-position: center;
+}
+.spot-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  flex-grow: 1;
+}
+.spot-info h3 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+}
+.spot-info p {
+  margin: 0;
+  color: #555;
+  font-size: 0.9rem;
+}
+.spot-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  font-weight: 500;
+}
+.rating {
+  display: flex;
+  align-items: center;
+}
+.price {
+  color: #333;
+}
