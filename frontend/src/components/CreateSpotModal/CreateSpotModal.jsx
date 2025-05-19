@@ -128,7 +128,7 @@ export default function CreateSpotModal({ spot = null }) {
         </ul>
 
         <section className="form-section">
-          <h2>Where's your place located?</h2>
+          <h2>Wheres your place located?</h2>
           <input
             value={country}
             onChange={e => setCountry(e.target.value)}
