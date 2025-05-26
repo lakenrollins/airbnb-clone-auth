@@ -1,0 +1,50 @@
+.booking-modal-form {
+  background: var(--color-background, #fff);
+  padding: 28px 20px 20px 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  max-width: 350px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.booking-modal-form h2 {
+  color: var(--color-primary, #ff5a5f);
+  text-align: center;
+  margin-bottom: 12px;
+}
+.booking-modal-form label {
+  color: var(--color-text, #333);
+  font-weight: 500;
+}
+.booking-modal-form input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border-radius: 6px;
+  border: 1.5px solid var(--color-primary, #ff5a5f);
+}
+.booking-modal-form .error {
+  color: var(--color-primary, #ff5a5f);
+  background: #fff0f0;
+  border-radius: 6px;
+  padding: 6px 10px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.booking-modal-form button[type="submit"] {
+  background: var(--color-primary, #ff5a5f);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.2s;
+}
+.booking-modal-form button[type="submit"]:hover {
+  background: var(--color-accent, #fc642d);
+}

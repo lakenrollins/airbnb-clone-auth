@@ -11,19 +11,19 @@ export default function CreateSpotModal({ spot = null }) {
   const { closeModal } = useModal()
 
   // Prefill if editing
-  const [country, setCountry] = useState(spot?.country || '')
-  const [address, setAddress] = useState(spot?.address || '')
-  const [city, setCity] = useState(spot?.city || '')
-  const [stateVal, setStateVal] = useState(spot?.state || '')
-  const [lat, setLat] = useState(spot?.lat ?? '')
-  const [lng, setLng] = useState(spot?.lng ?? '')
+  const [country, setCountry]       = useState(spot?.country || '')
+  const [address, setAddress]       = useState(spot?.address || '')
+  const [city, setCity]             = useState(spot?.city || '')
+  const [stateVal, setStateVal]     = useState(spot?.state || '')
+  const [lat, setLat]               = useState(spot?.lat ?? '')
+  const [lng, setLng]               = useState(spot?.lng ?? '')
   const [description, setDescription] = useState(spot?.description || '')
-  const [name, setName] = useState(spot?.name || '')
-  const [price, setPrice] = useState(spot?.price || '')
+  const [name, setName]             = useState(spot?.name || '')
+  const [price, setPrice]           = useState(spot?.price || '')
   const [previewImage, setPreviewImage] = useState(
     spot?.SpotImages?.find(img => img.preview)?.url || ''
   )
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors]         = useState({})
 
   useEffect(() => {
     // reset errors when spot changes
@@ -65,11 +65,11 @@ export default function CreateSpotModal({ spot = null }) {
       city,
       state: stateVal,
       country,
-      lat: lat !== '' ? parseFloat(lat) : null,
-      lng: lng !== '' ? parseFloat(lng) : null,
+      lat:    lat !== '' ? parseFloat(lat) : null,
+      lng:    lng !== '' ? parseFloat(lng) : null,
       name,
       description,
-      price: parseFloat(price)
+      price:  parseFloat(price)
     }
 
     let savedSpot
@@ -103,7 +103,7 @@ export default function CreateSpotModal({ spot = null }) {
     const imgRes = await csrfFetch(`/api/spots/${savedSpot.id}/images`, {
       method: 'POST',
       body: JSON.stringify({
-        url: previewImage.trim(),
+        url:     previewImage.trim(),
         preview: true
       })
     })

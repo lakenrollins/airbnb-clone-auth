@@ -17,8 +17,6 @@ const validateSpot = [
   check('city').notEmpty().withMessage('City is required'),
   check('state').notEmpty().withMessage('State is required'),
   check('country').notEmpty().withMessage('Country is required'),
-  check('lat').isFloat({ min: -90, max: 90 }).withMessage('Latitude must be between -90 and 90'),
-  check('lng').isFloat({ min: -180, max: 180 }).withMessage('Longitude must be between -180 and 180'),
   check('name').isLength({ min: 1, max: 50 }).withMessage('Name must be between 1 and 50 characters'),
   check('description').notEmpty().withMessage('Description is required'),
   check('price').isFloat({ min: 0 }).withMessage('Price must be a positive number'),

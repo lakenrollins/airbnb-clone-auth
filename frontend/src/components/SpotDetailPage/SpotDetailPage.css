@@ -1,78 +1,83 @@
+
+
 .detail-container {
   max-width: 1000px;
   margin: 32px auto;
   padding: 0 24px;
   font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--color-background);
+  color: var(--color-text);
 }
 
 .location {
-  color: #666;
+  color: var(--color-secondary);
   margin-bottom: 18px;
   font-size: 1.1rem;
 }
 
-.images-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 12px;
-  margin-bottom: 28px;
+.spot-detail-main {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  border-radius: 10px;
+  padding: 24px 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1.5px solid var(--color-primary);
+}
+
+.images-section {
+  flex: 1 1 50%;
+  min-width: 320px;
+  max-width: 480px;
 }
 
 .main-image {
   width: 100%;
-  padding-top: 56.25%;
+  aspect-ratio: 16/9;
   background-size: cover;
   background-position: center;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-.small-images {
-  display: grid;
-  grid-template-rows: repeat(4, 1fr);
-  gap: 12px;
-}
-
-.small-image {
-  width: 100%;
-  padding-top: 56.25%;
-  background-size: cover;
-  background-position: center;
-  border-radius: 10px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-}
-
-.detail-main {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 32px;
-}
-
-.description-section {
-  flex: 1 1 60%;
+.info-section {
+  flex: 1 1 0%;
   min-width: 300px;
+  background: #fff;
+
+  padding: 24px 20px;
+
+}
+
+.info-section h2 {
+  color: var(--color-primary);
+  margin-bottom: 10px;
+}
+
+.info-section .description-section {
+  margin-bottom: 24px;
 }
 
 .reservation-box {
-  flex: 1 1 300px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-accent);
   border-radius: 12px;
-  padding: 24px 20px;
-  height: fit-content;
+  padding: 20px 16px;
   background: #fafbfc;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  margin-bottom: 18px;
 }
 
 .reservation-box .price {
-  font-size: 1.7rem;
-  margin-bottom: 14px;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
   font-weight: 600;
+  color: var(--color-primary);
 }
 
 .reservation-box span {
   font-size: 1rem;
-  color: #888;
+  color: var(--color-secondary);
   font-weight: 400;
 }
 
@@ -80,7 +85,7 @@
   width: 100%;
   padding: 12px;
   font-size: 1.1rem;
-  background: #ff385c;
+  background: var(--color-primary);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -89,17 +94,32 @@
   transition: background 0.2s;
 }
 .reservation-box button:hover {
-  background: #e11d48;
+  background: var(--color-accent);
+}
+
+.rating-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  margin-bottom: 16px;
+  font-size: 1rem;
+  color: var(--color-secondary);
 }
 
 .reviews-section {
-  margin-top: 32px;
+  margin-top: 40px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 24px 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid var(--color-accent);
 }
 
 .reviews-section h3 {
   margin-bottom: 12px;
   font-size: 1.2rem;
-  color: #222;
+  color: var(--color-primary);
 }
 
 .review {
@@ -111,11 +131,12 @@
 }
 
 .review strong {
-  color: #333;
+  color: var(--color-text);
 }
 
+
 .review span {
-  color: #ff385c;
+  color: var(--color-primary);
   margin-left: 8px;
   font-weight: 500;
 }
@@ -126,46 +147,11 @@
   font-size: 1rem;
 }
 
-/* Responsive adjustments */
-@media (max-width: 800px) {
-  .detail-main {
-    flex-direction: column;
-    gap: 20px;
-  }
-  .reservation-box {
-    margin-top: 24px;
-    width: 100%;
-  }
-  .description-section {
-    width: 100%;
-  }
-  .images-grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-  }
-  .small-images {
-    grid-template-rows: repeat(2, 1fr);
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-}
-
-
-.rating-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 28px;
-  margin-bottom: 16px;
-  font-size: 1rem;
-  color: #222;
-}
-
 .post-review-btn {
   display: inline-block;
   padding: 8px 16px;
   margin-bottom: 16px;
-  background-color: #007bff;
+  background-color: var(--color-secondary);
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -174,23 +160,7 @@
   transition: background 0.2s;
 }
 .post-review-btn:hover {
-  background-color: #0056b3;
-}
-
-.reviews-list {
-  list-style: none;
-  padding: 0;
-  margin-top: 12px;
-}
-.reviews-list .review {
-  margin-bottom: 14px;
-}
-
-/* Ensure the review section heading uses the existing reviews-section spacing */
-.reviews-section h3 {
-  margin-bottom: 12px;
-  font-size: 1.2rem;
-  color: #222;
+  background-color: var(--color-accent);
 }
 
 .delete-review-btn {
@@ -205,4 +175,26 @@
 }
 .delete-review-btn:hover {
   background: #c82333;
+}
+
+.reviews-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 12px;
+}
+.reviews-list .review {
+  margin-bottom: 14px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .detail-main {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .images-section,
+  .info-section {
+    max-width: 100%;
+    min-width: 0;
+  }
 }

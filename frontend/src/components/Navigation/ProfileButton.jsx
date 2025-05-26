@@ -7,6 +7,7 @@ import './Navigation.css'
 
 export default function ProfileButton({ user }) {
   const dispatch = useDispatch()
+
   const [showMenu, setShowMenu] = useState(false)
   const ulRef = useRef()
 
@@ -32,6 +33,7 @@ export default function ProfileButton({ user }) {
         <li>{user.firstName} {user.lastName}</li>
         <li>{user.email}</li>
         <li><NavLink to="/spots/manage">Manage Spots</NavLink></li>
+        <li><NavLink to="/bookings/manage">Manage Bookings</NavLink></li>
         <li><button onClick={logout}>Log Out</button></li>
       </ul>
     </div>

@@ -12,6 +12,7 @@ import SpotDetailPage from './components/SpotDetailPage/SpotDetailPage'
 import ManageSpotsPage from './components/ManageSpotsPage/ManageSpotsPage'
 import { restoreUser } from './store/session'
 import { Modal } from './context/Modal'      // ← import here
+import ManageBookings from './components/ManageBookings/ManageBookings'
 
 function Layout() {
   const dispatch = useDispatch()
@@ -36,7 +37,8 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <HomePage /> },
       { path: '/spots/:id', element: <SpotDetailPage /> },
-      { path: '/spots/manage', element: <ManageSpotsPage /> }
+      { path: '/spots/manage', element: <ManageSpotsPage /> },
+      { path: '/bookings/manage', element: <ManageBookings /> }
     ]
   }
 ])

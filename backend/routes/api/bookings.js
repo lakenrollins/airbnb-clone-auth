@@ -18,6 +18,9 @@ const validateBooking = [
   handleValidationErrors
 ];
 
+
+
+
 // GET  /api/spots/:spotId/bookings  (owner only)
 router.get('/', requireAuth, async (req, res) => {
   const { spotId } = req.params;
@@ -64,13 +67,12 @@ router.post('/', requireAuth, validateBooking, async (req, res) => {
 
 // PUT /api/spots/:spotId/bookings/:bookingId
 router.put('/:bookingId', requireAuth, validateBooking, async (req, res) => {
-  const { spotId, bookingId } = req.params;
+  const { bookingId } = req.params;
   const { startDate, endDate } = req.body;
   const booking = await Booking.findByPk(bookingId);
 
   if (!booking) return res.status(404).json({ message: "Booking couldn't be found" });
   if (booking.userId !== req.user.id) return res.status(403).json({ message: 'Forbidden' });
-  if (booking.spotId.toString() !== spotId) return res.status(400).json({ message: 'Invalid spot' });
   if (new Date(endDate) <= new Date(startDate)) {
     return res.status(400).json({ message: 'endDate cannot be on or before startDate' });
   }
@@ -78,7 +80,6 @@ router.put('/:bookingId', requireAuth, validateBooking, async (req, res) => {
   // conflict check excluding this booking
   const conflict = await Booking.findOne({
     where: {
-      spotId,
       id: { [Op.ne]: bookingId },
       [Op.or]: [
         { startDate: { [Op.between]: [startDate, endDate] } },
@@ -97,11 +98,10 @@ router.put('/:bookingId', requireAuth, validateBooking, async (req, res) => {
 
 // DELETE /api/spots/:spotId/bookings/:bookingId
 router.delete('/:bookingId', requireAuth, async (req, res) => {
-  const { spotId, bookingId } = req.params;
+  const { bookingId } = req.params;
   const booking = await Booking.findByPk(bookingId);
   if (!booking) return res.status(404).json({ message: "Booking couldn't be found" });
   if (booking.userId !== req.user.id) return res.status(403).json({ message: 'Forbidden' });
-  if (booking.spotId.toString() !== spotId) return res.status(400).json({ message: 'Invalid spot' });
 
   await booking.destroy();
   return res.json({ message: 'Successfully deleted' });

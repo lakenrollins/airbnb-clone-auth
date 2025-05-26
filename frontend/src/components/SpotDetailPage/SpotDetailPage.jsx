@@ -1,73 +1,60 @@
-// frontend/src/components/SpotDetailPage/SpotDetailPage.jsx
-
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { csrfFetch } from '../../store/csrf'
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchSpotDetail } from '../../store/spotDetail'
 import { useModal } from '../../context/Modal'
 import ReviewFormModal from '../ReviewFormModal/ReviewFormModal'
 import ConfirmModal from '../ConfirmModal/ConfirmModal'
 import './SpotDetailPage.css'
 import Loader from '../Loader'
+import OpenModalButton from '../OpenModalButton/OpenModalButton'
+import BookingModal from '../BookingModal/BookingModal'
+import LoginFormModal from '../LoginFormModal/LoginFormModal'
 
 export default function SpotDetailPage() {
-   const { id } = useParams()
+  const { id } = useParams()
+  const dispatch = useDispatch()
   const sessionUser = useSelector(state => state.session.user)
   const { setModalContent } = useModal()
 
-  const [spot, setSpot]         = useState(null)
-  const [reviews, setReviews]   = useState(null)   // start null
-  const [avgStars, setAvgStars] = useState(null)
+  const { spot, reviews, loading } = useSelector(state => state.spotDetail)
 
   useEffect(() => {
-    async function fetchData() {
-      const [spotRes, revRes] = await Promise.all([
-        csrfFetch(`/api/spots/${id}`),
-        csrfFetch(`/api/spots/${id}/reviews`)
-      ])
+    dispatch(fetchSpotDetail(id))
+  }, [dispatch, id])
 
-      const spotData = await spotRes.json()
-      const revData  = await revRes.json()
-      setSpot(spotData)
-      setReviews(revData.Reviews)
+  // Calculate avgStars
+  const avgStars = useMemo(() => {
+    if (!reviews || reviews.length === 0) return null
+    const total = reviews.reduce((sum, r) => sum + r.stars, 0)
+    return total / reviews.length
+  }, [reviews])
 
-      if (revData.Reviews.length > 0) {
-        const total = revData.Reviews.reduce((sum, r) => sum + r.stars, 0)
-        setAvgStars(total / revData.Reviews.length)
-      }
-    }
-    fetchData()
-  }, [id])
+  if (loading || !spot || !spot.Owner) return <Loader />
 
-  // show loader until both spot + reviews have arrived
-  if (!spot || reviews === null) return <Loader />
-  // Don't render until we have both spot and its owner data
-  if (!spot || !spot.Owner) return null
-
-  const isOwner     = sessionUser?.id === spot.Owner.id
+  const isOwner = sessionUser?.id === spot.Owner.id
   const hasReviewed = sessionUser && reviews.some(r => r.userId === sessionUser.id)
-  const canPost     = sessionUser && !isOwner && !hasReviewed
+  const canPost = sessionUser && !isOwner && !hasReviewed
+  const canBook = sessionUser && !isOwner
 
+  // These handlers would dispatch actions to update Redux state if you want full Redux control
   const handleNewReview = newReview => {
-    const updated = [newReview, ...reviews]
-    setReviews(updated)
-    const total = updated.reduce((sum, r) => sum + r.stars, 0)
-    setAvgStars(total / updated.length)
+    dispatch({
+      type: 'spotDetail/SET_REVIEWS',
+      reviews: [newReview, ...reviews]
+    })
   }
 
   const handleDelete = deletedId => {
     const updated = reviews.filter(r => r.id !== deletedId)
-    setReviews(updated)
-    if (updated.length > 0) {
-      const total = updated.reduce((sum, r) => sum + r.stars, 0)
-      setAvgStars(total / updated.length)
-    } else {
-      setAvgStars(null)
-    }
+    dispatch({
+      type: 'spotDetail/SET_REVIEWS',
+      reviews: updated
+    })
   }
 
   const previewImg = spot.SpotImages.find(img => img.preview)
-  const smallImgs  = spot.SpotImages.filter(img => !img.preview)
+  const smallImgs = spot.SpotImages.filter(img => !img.preview)
 
   return (
     <div className="detail-container">
@@ -76,41 +63,64 @@ export default function SpotDetailPage() {
         {spot.city}, {spot.state}, {spot.country}
       </p>
 
-      <div className="images-grid">
-        {previewImg && (
-          <div
-            className="main-image"
-            style={{ backgroundImage: `url(${previewImg.url})` }}
-          />
-        )}
-        <div className="small-images">
-          {smallImgs.slice(0, 4).map((img, idx) => (
+      <div className="spot-detail-main">
+        {/* LEFT: Images */}
+        <div className="images-section">
+          {previewImg && (
             <div
-              key={idx}
-              className="small-image"
-              style={{ backgroundImage: `url(${img.url})` }}
+              className="main-image"
+              style={{ backgroundImage: `url(${previewImg.url})` }}
             />
-          ))}
-        </div>
-      </div>
-
-      <div className="detail-main">
-        <div className="description-section">
-          <h2>
-            Hosted by {spot.Owner.firstName} {spot.Owner.lastName}
-          </h2>
-          <p>{spot.description}</p>
-        </div>
-        <div className="reservation-box">
-          <div className="price">
-            ${spot.price} <span>night</span>
+          )}
+          <div className="small-images">
+            {smallImgs.slice(0, 4).map((img, idx) => (
+              <div
+                key={idx}
+                className="small-image"
+                style={{ backgroundImage: `url(${img.url})` }}
+              />
+            ))}
           </div>
-          <button onClick={() => alert('Feature coming soon')}>
-            Reserve
-          </button>
+        </div>
+
+        {/* RIGHT: Info */}
+        <div className="info-section">
+          <div className="description-section">
+            <h2>
+              Hosted by {spot.Owner.firstName} {spot.Owner.lastName}
+            </h2>
+            <p>{spot.description}</p>
+          </div>
+          {
+            canBook ? (
+          <div className="reservation-box">
+            <div className="price">
+              ${spot.price} <span>night</span>
+            </div>
+            <OpenModalButton
+              buttonText="Reserve"
+              modalComponent={
+                <BookingModal
+                  spotId={spot.id}
+                  onBookingSuccess={() => {/* Optionally refresh bookings or show a message */ }}
+                />
+              }
+            />
+          </div>
+            ):
+            (<div className="reservation-box">
+              <p>You must be logged in and not an owner to book this spot.</p>
+              <OpenModalButton
+                buttonText="Log In"
+                modalComponent={<LoginFormModal />}
+              />
+            </div>)
+          }
+
         </div>
       </div>
 
+      {/* BELOW: Reviews */}
       <div className="reviews-section">
         <div className="rating-header">
           <span>
