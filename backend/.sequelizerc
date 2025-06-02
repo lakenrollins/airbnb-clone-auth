@@ -1,6 +1,3 @@
-
-
-
 // backend/.sequelizerc
 const path = require('path');
 
