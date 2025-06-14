@@ -73,6 +73,18 @@ form button[type="submit"]:hover {
   transform: translateY(-2px) scale(1.01);
 }
 
+form button[type="submit"]:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+form button[type="submit"]:disabled:hover {
+  background: #cccccc;
+  transform: none;
+}
+
 .error-list {
   color: var(--color-primary);
   margin: 0 0 16px 0;
@@ -91,6 +103,14 @@ form .field-group {
 form input[type="checkbox"] {
   width: auto;
   margin-right: 8px;
+}
+
+.field-hint {
+  display: block;
+  margin-top: -14px;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  color: var(--color-primary);
 }
 
 @media (max-width: 500px) {

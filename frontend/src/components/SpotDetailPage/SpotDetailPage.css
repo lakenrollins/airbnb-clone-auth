@@ -1,5 +1,3 @@
-
-
 .detail-container {
   max-width: 1000px;
   margin: 32px auto;
@@ -100,11 +98,34 @@
 .rating-header {
   display: flex;
   align-items: center;
-  gap: 12px;
   margin-top: 28px;
   margin-bottom: 16px;
-  font-size: 1rem;
+  font-size: 1.1rem;
+}
+
+.rating-summary {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
   color: var(--color-secondary);
+}
+
+.reservation-box .rating-summary {
+  justify-content: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  margin-bottom: 16px;
+}
+
+.star-rating {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.review-count {
+  color: var(--color-secondary);
+  font-weight: 500;
 }
 
 .reviews-section {

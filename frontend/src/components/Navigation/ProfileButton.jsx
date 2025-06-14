@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { FaUserCircle } from 'react-icons/fa'
-import { NavLink} from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import * as sessionActions from '../../store/session'
 import './Navigation.css'
 
 export default function ProfileButton({ user }) {
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
   const [showMenu, setShowMenu] = useState(false)
   const ulRef = useRef()
 
@@ -22,7 +22,15 @@ export default function ProfileButton({ user }) {
     return () => document.removeEventListener('click', closeMenu)
   }, [showMenu])
 
-  const logout = e => { e.preventDefault(); dispatch(sessionActions.logout()) }
+  const logout = e => { 
+    e.preventDefault()
+    dispatch(sessionActions.logout())
+      .then(() => {
+        setShowMenu(false) // Close the dropdown
+        navigate('/') // Navigate to home page after successful logout
+      })
+  }
+  
   const ulClass = `profile-dropdown${showMenu ? '' : ' hidden'}`
 
   return (

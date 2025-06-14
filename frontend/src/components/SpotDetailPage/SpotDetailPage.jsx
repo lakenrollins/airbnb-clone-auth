@@ -56,6 +56,15 @@ export default function SpotDetailPage() {
   const previewImg = spot.SpotImages.find(img => img.preview)
   const smallImgs = spot.SpotImages.filter(img => !img.preview)
 
+  // Format the ratings summary consistently
+  const ratingSummary = (
+    <>
+      <span className="star-rating">{avgStars !== null ? avgStars.toFixed(1) : 'New'} ★</span>
+      <span className="dot-separator">·</span>
+      <span className="review-count">{reviews.length} {reviews.length === 1 ? 'Review' : 'Reviews'}</span>
+    </>
+  );
+
   return (
     <div className="detail-container">
       <h1>{spot.name}</h1>
@@ -97,6 +106,10 @@ export default function SpotDetailPage() {
             <div className="price">
               ${spot.price} <span>night</span>
             </div>
+            {/* Add rating summary in the reservation box */}
+            <div className="rating-summary">
+              {ratingSummary}
+            </div>
             <OpenModalButton
               buttonText="Reserve"
               modalComponent={
@@ -122,13 +135,9 @@ export default function SpotDetailPage() {
 
       {/* BELOW: Reviews */}
       <div className="reviews-section">
+        {/* Update the rating header to use the same rating summary */}
         <div className="rating-header">
-          <span>
-            {avgStars !== null ? avgStars.toFixed(1) : 'New'} ★
-          </span>
-          <span>
-            {reviews.length} {reviews.length === 1 ? 'Review' : 'Reviews'}
-          </span>
+          {ratingSummary}
         </div>
 
         {canPost && (

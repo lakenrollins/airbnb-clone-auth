@@ -1,3 +1,5 @@
+
+
 .form-container {
   margin: 40px auto;
   padding: 20px;
@@ -5,6 +7,7 @@
   border-radius: 14px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.10);
   font-family: 'Segoe UI', Arial, sans-serif;
+  min-width: 300px;
 }
 
 .form-container h1 {
@@ -63,4 +66,31 @@ form button[type="submit"] {
 
 form button[type="submit"]:hover {
   background: #e11d48;
+}
+
+form button[type="submit"]:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+form button[type="submit"]:disabled:hover {
+  background: #cccccc;
+}
+
+.demo-login-btn {
+  width: 100%;
+  padding: 12px 0;
+  background: #00a699; /* Different color to distinguish from regular login */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.2s;
+}
+
+.demo-login-btn:hover {
+  background: #008489;
 }
